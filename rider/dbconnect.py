@@ -24,9 +24,9 @@ class DBHelper:
 		query = "select * from rider_info where rider_name = '{}' and rider_password = '{}'".format(user_name,password)
 		cur = self.con.cursor()
 		cur.execute(query)
-		rowcount = len(list(cur))
+		info = list(cur)
 		self.con.commit()
-		return rowcount
+		return info
 
 #INSERT DRIVER
 
@@ -63,4 +63,29 @@ class DBHelper:
 		cur = self.con.cursor()
 		cur.execute(query)
 		self.con.commit()
+
+	def getCab(self,lat,lon):
+		query = "SELECT *, SQRT(POW(2,({}-lat)) + POW(2,({}-lon))) as distance from cab_booking.driver_info where isavailable = 1 having distance < 3 order by distance limit 1".format(lat,lon)
+		
+		cur = self.con.cursor()
+		cur.execute(query)
+		cabInfo = list(cur)
+		self.con.commit()
+		return cabInfo
+	
+	def addHistory(self,insertObj):
+		query = "Insert into history(rider_id,driver_id, source, destination) values({},{},'{}','{}')".format(insertObj["rider_id"],insertObj["driver_id"],insertObj["source"],insertObj["destination"])
+		cur = self.con.cursor()
+		cur.execute(query)
+		self.con.commit()
+	
+	def getHistory(self,rider_id):
+		query = "Select driver_info.driver_name, driver_info.cab_number, history.source, history.destination from history join driver_info on history.driver_id = driver_info.driver_id where history.rider_id = {}".format(rider_id)
+		
+		cur = self.con.cursor(dictionary=True)
+		cur.execute(query)
+		historyList = list(cur)
+		self.con.commit()
+		return historyList
+	
 		
