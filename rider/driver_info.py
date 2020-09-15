@@ -20,8 +20,8 @@ class DRIVER1:
                     driver_dict["driver_password"] = driver_info[0][3]
                     driver_dict["isavailable"] = driver_info[0][4]
                     
-                    driver_dict["lat"] = float(driver_info[0][5])
-                    driver_dict["lon"] = float(driver_info[0][6])
+                    driver_dict["lat"] = float(driver_info[0][5] or 0)
+                    driver_dict["lon"] = float(driver_info[0][6] or 0)
                     
                     print("welcome", user_name,driver_dict)
                     pickle.dump(driver_dict,open("driver.dat","wb"))
