@@ -2,49 +2,48 @@ from dbconnect import DBHelper
 import requests
 from geopy.geocoders import Nominatim
 import pickle
-
+from booking import Booking
 class RiderLocation:
-    def __init__(self):
+    def getSourceLocation(self):
         # self.location=[]
         while True:
             locInput = int(input("For Current Location enter 1, or enter 2 for adding your pick up location : "))
             if locInput == 1:
                 res = requests.get('http://ipinfo.io/')
                 data = res.json()
-                print(list(map(float,data["loc"].split(','))))
-                break
+                curLocList = list(map(float,data["loc"].split(',')))
+                destLocList = self.getDestination()
+                geolocator = Nominatim(user_agent='myapplication')
+                location = geolocator.reverse("{},{}".format(curLocList[0],curLocList[1]))
+                status = Booking().findDriver(curLocList[0],curLocList[1],destLocList["loc"][0],destLocList["loc"][1])
+                status["source"] = location
+                status["destination"] = destLocList["destination_name"]
+                return status
             elif locInput == 2:
                 pickupLoc = input("Enter pickup location : ")
                 geolocator = Nominatim(user_agent='myapplication')
                 location = geolocator.geocode(pickupLoc)
                 if location:
-                    
-                    res = []
-                    res.append(round(float(location.raw["lat"]),5))
-                    res.append(round(float(location.raw["lon"]),5))
-                    
-                    print(res)
-                    break
+                    curLocList = [float(location.raw["lat"]),float(location.raw["lon"])]
+                    destLocList = self.getDestination()
+                    status = Booking().findDriver(curLocList[0],curLocList[1],destLocList["loc"][0],destLocList["loc"][1])
+                    return status
                 else:
                     print("Invalid Pickup location")
 
-
-class Destination:
-    def __init__(self):
-        Dest = input("Enter destination : ")
+    def getDestination(self):
+        dest = input("Enter destination : ")
         geolocator = Nominatim(user_agent='myapplication')
-        destination = geolocator.geocode(Dest)
+        destination = geolocator.geocode(dest)
         if destination:
-            
-            res = []
-            res.append(round(float(destination.raw["lat"]),5))
-            res.append(round(float(destination.raw["lon"]),5))
-            
-            print(res)
+            res = [float(destination.raw["lat"]),float(destination.raw["lon"])]
+            destObj= {"loc":res, "destination_name":dest}
+            return destObj
             # print(res[0]+res[1])                      
         else:
             print("Invalid Pickup location")
 
+# RiderLocation().getSourceLocation()
 class DriverLocation:
     def __init__(self):
         driver_info = pickle.load(open("driver.dat","rb"))
