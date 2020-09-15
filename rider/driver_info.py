@@ -2,7 +2,7 @@ from dbconnect import DBHelper
 from location import DriverLocation
 import pickle
 
-class DRIVER1:
+class DRIVER:
     def __init__(self):
         while True:
             action = int(input("enter 1 for login and enter 2 for signup : "))
@@ -53,4 +53,4 @@ class DRIVER1:
                 except Exception as e:
                     print("You've already signedup. Please login again")
                         
-DRIVER1()                        
+# DRIVER()                        
