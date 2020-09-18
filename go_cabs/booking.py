@@ -1,6 +1,6 @@
 from dbconnect import DBHelper
 
-
+#BOOKING A CAB IF ANY CAB'S ARE AVAILABLE
 class Booking:
     def findDriver(self,sourcelat,sourcelon, destlat, destlon):
         print(sourcelat,sourcelon,destlat,destlon)

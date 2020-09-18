@@ -5,7 +5,7 @@ import pickle
 class DRIVER:
     def __init__(self):
         while True:
-            action = int(input("enter 1 for login and enter 2 for signup : "))
+            action = int(input("\nEnter 1 for login and Enter 2 for signup : "))
             user_name = input("ENTER YOUR USER_NAME : ")
             cab_no = input("ENTER YOUR CAB_NUMBER : ")
             password = input("ENTER YOUR PASSWORD : ")

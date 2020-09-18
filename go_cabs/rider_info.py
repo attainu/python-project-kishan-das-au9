@@ -5,7 +5,7 @@ import pickle
 class RIDER:
     def __init__(self):
         while True:
-            action = int(input("enter 1 for login and enter 2 for signup : "))
+            action = int(input("\nEnter 1 for login and Enter 2 for signup : "))
             user_name = input("ENTER YOUR USER_NAME : ")
             password = input("ENTER YOUR PASSWORD : ")
             if action == 1:
@@ -16,12 +16,12 @@ class RIDER:
                     driver_dict["rider_name"] = rider_info[0][1]
                     driver_dict["rider_password"] = rider_info[0][2]
                     
-                    print("welcome", user_name,driver_dict)
+                    print("\nwelcome", user_name,driver_dict)
                     pickle.dump(driver_dict,open("rider.dat","wb"))
                     first_menu = "1. Book a ride"
                     insertObj = {}
                     while True:
-                        print("ENTER YOUR PREFERENCE : ")
+                        print("\nENTER YOUR PREFERENCE : ")
                         preference=int(input(" {} \n 2: History \n 3: Exit\n ".format(first_menu) ))
                         if preference == 1:
                             status = RiderLocation().getSourceLocation()

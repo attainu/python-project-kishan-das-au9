@@ -36,6 +36,7 @@ class DBHelper:
 		cabInfo = list(cur)
 		self.con.commit()
 		return cabInfo
+		
 #ADDING RIDER HISTORY	
 	def addHistory(self,insertObj):
 		query = "Insert into history(rider_id,driver_id, source, destination) values({},{},'{}','{}')".format(insertObj["rider_id"],insertObj["driver_id"],insertObj["source"],insertObj["destination"])
