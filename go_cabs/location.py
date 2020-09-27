@@ -7,15 +7,15 @@ class RiderLocation:
     def getSourceLocation(self):
         # self.location=[]
         while True:
-            locInput = int(input("For Current Location enter 1, or enter 2 for adding your pick up location : "))
+            locInput = int(input("For Current Location enter 1 : "))
             if locInput == 1:
                 res = requests.get('http://ipinfo.io/')
                 data = res.json()
                 curLocList = list(map(float,data["loc"].split(',')))
                 destLocList = self.getDestination()
                 geolocator = Nominatim(user_agent='myapplication')
-                location = geolocator.reverse("{},{}".format(curLocList[0],curLocList[1]))
-                status = Booking().findDriver(curLocList[0],curLocList[1],destLocList["loc"][0],destLocList["loc"][1])
+                location = geolocator.reverse("{},{}".format(curLocList[0], curLocList[1]))
+                status = Booking().findDriver(curLocList[0],curLocList[1], destLocList["loc"][0],destLocList["loc"][1])
                 status["source"] = location
                 status["destination"] = destLocList["destination_name"]
                 return status
@@ -26,7 +26,7 @@ class RiderLocation:
                 if location:
                     curLocList = [float(location.raw["lat"]),float(location.raw["lon"])]
                     destLocList = self.getDestination()
-                    status = Booking().findDriver(curLocList[0],curLocList[1],destLocList["loc"][0],destLocList["loc"][1])
+                    status = Booking().findDriver(curLocList[0],curLocList[1], destLocList["loc"][0], destLocList["loc"][1])
                     return status
                 else:
                     print("Invalid Pickup location")

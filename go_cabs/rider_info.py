@@ -17,7 +17,7 @@ class RIDER:
                     driver_dict["rider_password"] = rider_info[0][2]
                     
                     print("\nwelcome", user_name,driver_dict)
-                    pickle.dump(driver_dict,open("rider.dat","wb"))
+                    pickle.dump(driver_dict,open("rider.dat", "wb"))
                     first_menu = "1. Book a ride"
                     insertObj = {}
                     while True:
@@ -30,7 +30,7 @@ class RIDER:
                                 first_menu = "4. End a ride"
                                 # get riderid from rider.dat
                                 
-                                rider_info = pickle.load(open("rider.dat","rb"))
+                                rider_info = pickle.load(open("rider.dat", "rb"))
                                 # rider_id=rider_info["rider_id"]
                                 insertObj["rider_id"] = rider_info["rider_id"]
                                 insertObj["driver_id"] = status["driver_id"]
@@ -45,7 +45,7 @@ class RIDER:
                             print("history")
                         elif preference == 2:
                             # History query call
-                            rider_info = pickle.load(open("rider.dat","rb"))
+                            rider_info = pickle.load(open("rider.dat", "rb"))
                             history = DBHelper().getHistory(rider_info["rider_id"])
                             print(history)
                         elif preference == 3:
@@ -56,7 +56,7 @@ class RIDER:
                 break
             if action == 2:
                 try:
-                    DBHelper().insert_rider(user_name,password)
+                    DBHelper().insert_rider(user_name, password)
                 except Exception as e:
                     print("You've already signedup. Please login again")
                     

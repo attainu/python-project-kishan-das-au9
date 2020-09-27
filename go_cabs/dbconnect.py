@@ -39,12 +39,12 @@ class DBHelper:
 		
 #ADDING RIDER HISTORY	
 	def addHistory(self,insertObj):
-		query = "Insert into history(rider_id,driver_id, source, destination) values({},{},'{}','{}')".format(insertObj["rider_id"],insertObj["driver_id"],insertObj["source"],insertObj["destination"])
+		query = "Insert into history(rider_id, driver_id, source, destination) values({},{},'{}','{}')".format(insertObj["rider_id"],insertObj["driver_id"],insertObj["source"],insertObj["destination"])
 		cur = self.con.cursor()
 		cur.execute(query)
 		self.con.commit()
 #GETTING RIDER HISTORY	
-	def getHistory(self,rider_id):
+	def getHistory(self, rider_id):
 		query = "Select driver_info.driver_name, driver_info.cab_number, history.source, history.destination from history join driver_info on history.driver_id = driver_info.driver_id where history.rider_id = {}".format(rider_id)
 		
 		cur = self.con.cursor(dictionary=True)

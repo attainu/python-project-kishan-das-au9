@@ -11,7 +11,7 @@ class DRIVER:
             password = input("ENTER YOUR PASSWORD : ")
 
             if action == 1:
-                driver_info = DBHelper().check_driver(user_name,cab_no, password)
+                driver_info = DBHelper().check_driver(user_name, cab_no, password)
                 if len(driver_info) == 1:
                     driver_dict = {}
                     driver_dict["driver_id"] = driver_info[0][0]
@@ -24,7 +24,7 @@ class DRIVER:
                     driver_dict["lon"] = float(driver_info[0][6] or 0)
                     
                     print("welcome", user_name,driver_dict)
-                    pickle.dump(driver_dict,open("driver.dat","wb"))
+                    pickle.dump(driver_dict,open("driver.dat", "wb"))
                     while True:
                         print("ENTER YOUR PREFERENCE : ")
                         preference=int(input(" 1: Update Location \n 2: Update Availabiltiy \n 3: Exit\n " ))
@@ -36,7 +36,7 @@ class DRIVER:
                             if isavailable == "y":
                                 
                                 pref= int(input("Enter 1 if you are available and 0 if not : "))
-                                driver_info = pickle.load(open("driver.dat","rb"))
+                                driver_info = pickle.load(open("driver.dat", "rb"))
                                 if pref == 1:
                                     DBHelper().updateisavailable(driver_info["driver_id"],1)
                                 else:
